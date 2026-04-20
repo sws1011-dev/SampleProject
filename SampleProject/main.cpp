@@ -22,7 +22,7 @@ int main()
 	int fireResist = 0, lightningResist = 0, coldResist = 0, poisonResist = 0;
 
 	bool isHardcore = false;
-	char hardcoreInput;
+	char hardcoreInput;	
 
 	// [UI] 타이틀 화면 (아스키 아트 추가)
 	cout << "=====================================================\n";
