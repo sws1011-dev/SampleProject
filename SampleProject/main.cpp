@@ -26,6 +26,8 @@ int main()
 	int coldResist = 0;
 	int poisonResist = 0;
 
+	char hardcoreInput;
+
 	// 하드코어 모드 여부 변수
 	bool isHardcore = true;
 
@@ -36,6 +38,23 @@ int main()
 	cin >> charactorClass;
 	cout << "\n::::::::::::::::::: Welcome to the Sanctuary :::::::::::::::::\n";
 	cout << "User Name : [" << userName << "]\n";
+
+	cout << "Enable Hardcore Mode? (1) Yes / (2) No : ";
+	cin >> hardcoreInput;
+
+	// 하드코어 모드 여부 설정(if, else if, else 조건문 사용)
+	if (hardcoreInput == '1') {
+		isHardcore = true;
+		cout << "[System] Hardcore mode enabled. Be careful, Death is permanent! \n";
+	}
+	else if (hardcoreInput == '2') {
+		isHardcore = false;
+		cout << "[System] Standard mode enabled.\n";
+	}
+	else {
+		isHardcore = false;
+		cout << "[System] Invalid input. Defaulting to Standard mode.\n";
+	}
 
 	// 2. 변수에 저장된 데이터 출력
 	cout << "--------------------------Character Status--------------------------\n";
