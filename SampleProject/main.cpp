@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string> // 문자열 자료형 사용
+#include <cstdlib> // rand(), srand() 랜덤(주사위)를 섞는 함수
+#include <ctime> // time() 랜덤 시드로 사용
 
 using namespace std;
 
@@ -139,6 +141,27 @@ int main()
 	}
 	else {
 		cout << "[System] You defeated the Goblin\n";
+
+		// 난수 생성기 초기화 (매번 다른 아이템이 나오게 함)
+		srand((unsigned int)time(NULL));
+
+		cout << "-------------------- Looting Items --------------------\n";
+		
+		// for문을 사용하여 3번 반복
+		for (int i = 1; i <= 3; i++) {
+			int lootRoll = rand() % 4; // 0, 1, 2, 3 중 하나를 무작위로 선택
+			string itemName;
+
+			// 뽑힌 숫자에 따라 아이템 이름 결정
+			if (lootRoll == 0) itemName = "Gold";
+			else if (lootRoll == 1) itemName = "Healing Potion";
+			else if (lootRoll == 2) itemName = "Weapon";
+			else itemName = "Armor";
+
+			// 획득 결과 출력
+			cout << i << ". Get [" << itemName << "]\n";
+		}
+		cout << "-------------------------------------\n";
 	}
 
 	return 0;
