@@ -1,9 +1,11 @@
 #include <iostream>
 
+using namespace std;
+
 int main()
 {
-	std::cout << "Hello, World!1\n";
-	std::cout << "Hello, World!2" << std::endl;
+	cout << "Hello, World!1\n";
+	cout << "Hello, World!2" << endl;
 
 	return 0;
 }
