@@ -1,11 +1,14 @@
 #include <iostream>
+#include <string> // 문자열 자료형 사용
 
 using namespace std;
 
 int main()
 {
 	char userName[50];
-	char charactorClass[50];
+	// char charactorClass[50];
+	string charactorClass;
+	int classChoiceInput;
 
 	// 1. 다양한 자료형의 변수 선언 및 초기값 할당
 
@@ -26,16 +29,36 @@ int main()
 	int coldResist = 0;
 	int poisonResist = 0;
 
-	char hardcoreInput;
-
 	// 하드코어 모드 여부 변수
 	bool isHardcore = true;
+	char hardcoreInput;
 
 	cout << "[Character Creation]\n";
+
 	cout << "Input your name : ";
 	cin >> userName;
-	cout << "Input your Class : ";
-	cin >> charactorClass;
+
+	cout << "Select your Class : \n";
+	cout << "1. Amazon\n2. Assassin\n3. Barbarian\n4. Druid\n";
+	cout << "5. Necromancer\n6. Paladin\n7. Sorceress\n8. Warlock\n";
+	cout << "Input Class Number : ";
+	cin >> classChoiceInput;
+
+	switch (classChoiceInput) {
+	case 1: charactorClass = "Amazon"; break;
+	case 2: charactorClass = "Assassin"; break;
+	case 3: charactorClass = "Barbarian"; break;
+	case 4: charactorClass = "Druid"; break;
+	case 5: charactorClass = "Necromancer"; break;
+	case 6: charactorClass = "Paladin"; break;
+	case 7: charactorClass = "Sorceress"; break;
+	case 8: charactorClass = "Warlock"; break;
+	default:
+		charactorClass = "Unknown";
+		cout << "[System] Invalid choice. Defaulting to Unknown.\n";
+		break;
+	}
+
 	cout << "\n::::::::::::::::::: Welcome to the Sanctuary :::::::::::::::::\n";
 	cout << "User Name : [" << userName << "]\n";
 
@@ -83,7 +106,7 @@ int main()
 	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
 	cout << "[Memory Check] bool type size : " << sizeof(isHardcore) << "bytes\n";
 	cout << "[Memory Check] float type size : " << sizeof(float) << "bytes\n";
-	cout << "[Memory Check] float type size : " << sizeof(double) << "bytes\n";
+	cout << "[Memory Check] double type size : " << sizeof(double) << "bytes\n";
 	cout << "[Memory Check] char type size : " << sizeof(char) << "bytes\n";
 	cout << "[Memory Check] char array(userName) size : " << sizeof(userName) << "bytes\n";
 
