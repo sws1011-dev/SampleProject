@@ -102,13 +102,44 @@ int main()
 
 	cout << "-----------------------------------------------------\n";
 
-	// 3. sizeof 연산자를 이용한 메모리 크기 확인
-	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
-	cout << "[Memory Check] bool type size : " << sizeof(isHardcore) << "bytes\n";
-	cout << "[Memory Check] float type size : " << sizeof(float) << "bytes\n";
-	cout << "[Memory Check] double type size : " << sizeof(double) << "bytes\n";
-	cout << "[Memory Check] char type size : " << sizeof(char) << "bytes\n";
-	cout << "[Memory Check] char array(userName) size : " << sizeof(userName) << "bytes\n";
+	// 기본 전투 시스템 - while문 사용(거짓일 때 까지 무한 루프)
+	int goblinHp = 30; // 고블린 체력
+	int action;
+
+	cout << "\n[System] You encounterd a Goblin!\n";
+
+	// 둘 다 체력이 0보다 큰(살아있는) 동안 무한 반복
+	while (goblinHp > 0 && hp > 0) {
+		cout << "\n[Goblin HP: " << goblinHp << " | My HP: " << hp << "]\n";
+		cout << "1. Attack : ";
+		cin >> action;
+
+		if (action == 1) {
+			// 1. 플레이어의 공격
+			goblinHp -= attackDamage;
+			cout << "=> You attacked the Goblin! (-" << attackDamage << ")\n";
+
+			// 2. 고블린이 살아있다면 반격
+			if (goblinHp > 0) {
+				hp -= 30;
+				cout << "=> The Goblin attacked you! (-30)\n";
+			}
+		}
+		else {
+			cout << "=> Invalid Action! You stumbled, and the Goblin seized the chance to attack you";
+			hp -= 30;
+			cout << "=> The Goblin attacked you! (-30)\n";
+		}
+	}
+
+	// 전투 종료 후 결과 판정
+	cout << "\n";
+	if (hp <= 0) {
+		cout << "[System] You died...\n";
+	}
+	else {
+		cout << "[System] You defeated the Goblin\n";
+	}
 
 	return 0;
 }
