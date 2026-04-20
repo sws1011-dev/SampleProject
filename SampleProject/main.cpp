@@ -22,6 +22,11 @@ int main()
 	// 하드코어 모드 여부 변수
 	bool isHardcore = true;
 
+	int fireResist = 0;
+	int lightningResist = 0;
+	int coldResist = 0;
+	int poisonResist = 0;
+
 	cout << "[Character Creation]\n";
 	cout << "Input your name : ";
 	cin >> userName;
@@ -40,9 +45,17 @@ int main()
 	cout << "Strength : " << strength << "\n";
 	cout << "Dexterity : " << dexterity << "\n";
 	cout << "Vitality : " << vitality << "\n";
-	cout << "Energy : " << energy << "\n";
-	cout << "Hardcore Mode : " << isHardcore << " (1: true, 0:false)\n";
+	cout << "Energy : " << energy << "\n\n";
+
+	cout << "Hardcore Mode : " << isHardcore << " (1: true, 0: false)\n\n";
+
+	cout << "Fire Resistance : " << fireResist << "\n";
+	cout << "Lightning Resistance : " << lightningResist << "\n";
+	cout << "Cold Resistance : " << coldResist << "\n";
+	cout << "Poision Resistance : " << poisonResist << "\n";
+
 	cout << "-----------------------------------------------------\n";
+
 
 	// 3. sizeof 연산자를 이용한 메모리 크기 확인
 	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
