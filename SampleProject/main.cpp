@@ -50,6 +50,17 @@ int main()
 	cout << "ptr+1 : " << ptr + 1 << "\n";
 	cout << "ptr+2 : " << ptr + 2 << "\n";
 
+	int scores[5] = { 85, 92, 78, 95, 88 };
+	cout << "&score[0] : " << &scores[0] << "\n";
+	cout << "&score[1] : " << &scores[1] << "\n";
+	cout << "&score[2] : " << &scores[2] << "\n";
+	cout << "&score[3] : " << &scores[3] << "\n";
+	cout << "&score[4] : " << &scores[4] << "\n";
+
+
+
+
+
 	system("pause");
 
 	// [UI] 타이틀 화면 (아스키 아트 추가)
