@@ -23,7 +23,7 @@ int main()
 	int fireResist = 0, lightningResist = 0, coldResist = 0, poisonResist = 0;
 
 	bool isHardcore = false;
-	char hardcoreInput;	
+	char hardcoreInput;
 
 	cout << "hp변수의 값 : " << hp << "\n";
 	cout << "hp변수의 주소값 : " << &hp << "\n";
@@ -62,11 +62,11 @@ int main()
 	cout << "scores : " << scores << "\n";			// 배열 이름
 	cout << "&scores[0] : " << &scores[0] << "\n";	// 첫 원소 주소
 	cout << "scores[2] : " << &scores[2] << "\n";	// 인덱스로 접근
-	cout << "(scores+2) : " << (scores+2) << "\n";	// 포인터 연산
-	cout << "*(scores+2) : " << *(scores+2) << "\n";	// 포인터 연산
+	cout << "(scores+2) : " << (scores + 2) << "\n";	// 포인터 연산
+	cout << "*(scores+2) : " << *(scores + 2) << "\n";	// 포인터 연산
 
 	// 형변환의 예외상황 1. sizeof() 사용
-	cout << "sizeof(scores) : " << sizeof(scores) << "\n";	
+	cout << "sizeof(scores) : " << sizeof(scores) << "\n";
 	cout << "sizeof(scores[0]) : " << sizeof(scores[0]) << "\n";
 	cout << "scores의 원소개수 : " << sizeof(scores) / sizeof(scores[0]) << "\n";
 
@@ -83,6 +83,19 @@ int main()
 		cout << "주소 : " << sPtr << ", 값 : " << *sPtr << "\n";
 		sPtr++;	// +1 다음 원소로 이동
 	}
+
+	// Wild Pointer 위험
+	//int* wildPtr; // 초기화 안 함 -> 쓰레기 주소값이 들어갈 것임
+	//*wildPtr = 100; // CRASH 발생. 잘못된 메모리에 접근하고 있음
+
+
+	// 포인터 변수 선언 시 안전한 초기화 예시문
+	int* wildPtr = nullptr;		// 안전한 초기화를 위한 예약어 nullptr 사용.
+	if (wildPtr != nullptr) {	// wildPtr의 null 체크 조건문
+		*wildPtr = 100;	// 실행안됨
+	}
+
+	cout << "wildPtr : " << wildPtr << "\n"; // 0
 
 	system("pause");
 
@@ -141,7 +154,7 @@ int main()
 	cout << " Level  : " << level << "\t\tMode  : " << (isHardcore ? "HARDCORE" : "STANDARD") << "\n";
 	cout << "-----------------------------------------------------\n";
 	cout << " [STATS]                 [RESISTANCES]\n";
-	
+
 	int hpBars = (hp * 10) / maxHp;
 	cout << " HP : [";
 	for (int i = 0; i < 10; i++) cout << (i < hpBars ? "#" : " ");
