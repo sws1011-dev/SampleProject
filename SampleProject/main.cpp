@@ -45,6 +45,11 @@ int main()
 	cout << "sizeof(double*) : " << sizeof(double*) << "bytes\n";
 	cout << "sizeof(char*) : " << sizeof(char*) << "bytes\n";
 
+	// 포인터 연산 (+1 = 자료형 메모리 크기만큼 이동)
+	cout << "ptr : " << ptr << "\n";
+	cout << "ptr+1 : " << ptr + 1 << "\n";
+	cout << "ptr+2 : " << ptr + 2 << "\n";
+
 	system("pause");
 
 	// [UI] 타이틀 화면 (아스키 아트 추가)
