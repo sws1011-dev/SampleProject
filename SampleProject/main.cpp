@@ -76,6 +76,13 @@ int main()
 	cout << "&scores : " << &scores << "\n";		// 시작 주소
 	cout << "&(scores + 1) : " << &scores + 1 << "\n";	// +20 배열 전체 단위로 이동
 
+	// for 반복문을 통한 배열 순환
+	int* sPtr = scores;
+
+	for (int i = 0; i < sizeof(scores) / sizeof(scores[0]); i++) {
+		cout << "주소 : " << sPtr << ", 값 : " << *sPtr << "\n";
+		sPtr++;	// +1 다음 원소로 이동
+	}
 
 	system("pause");
 
