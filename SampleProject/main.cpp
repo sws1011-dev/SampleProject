@@ -36,6 +36,9 @@ int main()
 	cout << "hp변수의 새로운 값 : " << hp << "\n";
 	cout << "ptr 역참조 값 : " << *ptr << "\n";
 
+	//int* ptr2 = nullptr;
+	//cout << "nullptr 할당한 주소 : " << ptr2 << "\n";
+	//cout << "nullptr 할당한 값 : " << *ptr2 << "\n";
 
 	system("pause");
 
