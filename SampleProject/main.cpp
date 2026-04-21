@@ -65,7 +65,16 @@ int main()
 	cout << "(scores+2) : " << (scores+2) << "\n";	// 포인터 연산
 	cout << "*(scores+2) : " << *(scores+2) << "\n";	// 포인터 연산
 
+	// 형변환의 예외상황 1. sizeof() 사용
+	cout << "sizeof(scores) : " << sizeof(scores) << "\n";	
+	cout << "sizeof(scores[0]) : " << sizeof(scores[0]) << "\n";
+	cout << "scores의 원소개수 : " << sizeof(scores) / sizeof(scores[0]) << "\n";
 
+	// 형변환의 예외상황 2. &(주소) 연산자 사용
+	cout << "scores : " << scores << "\n";			// 시작 주소
+	cout << "scores + 1 : " << scores + 1 << "\n";	// +4
+	cout << "&scores : " << &scores << "\n";		// 시작 주소
+	cout << "&(scores + 1) : " << &scores + 1 << "\n";	// +20 배열 전체 단위로 이동
 
 
 	system("pause");
