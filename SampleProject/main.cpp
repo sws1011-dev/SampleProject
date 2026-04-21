@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
@@ -7,6 +7,7 @@ using namespace std;
 
 int main()
 {
+
 	char userName[50];
 	string charactorClass;
 	int classChoiceInput;
@@ -23,6 +24,20 @@ int main()
 
 	bool isHardcore = false;
 	char hardcoreInput;	
+
+	cout << "hp변수의 값 : " << hp << "\n";
+	cout << "hp변수의 주소값 : " << &hp << "\n";
+
+	int* ptr = &hp;
+	cout << "ptr == &hp : " << ptr << "\n";
+	cout << "ptr 값 : " << *ptr << "\n";
+
+	*ptr = 200;
+	cout << "hp변수의 새로운 값 : " << hp << "\n";
+	cout << "ptr 역참조 값 : " << *ptr << "\n";
+
+
+	system("pause");
 
 	// [UI] 타이틀 화면 (아스키 아트 추가)
 	cout << "=====================================================\n";
