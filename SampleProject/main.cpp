@@ -40,6 +40,11 @@ int main()
 	//cout << "nullptr 할당한 주소 : " << ptr2 << "\n";
 	//cout << "nullptr 할당한 값 : " << *ptr2 << "\n";
 
+	cout << "sizeof(int) : " << sizeof(int) << "bytes\n";
+	cout << "sizeof(int*) : " << sizeof(int*) << "bytes\n";
+	cout << "sizeof(double*) : " << sizeof(double*) << "bytes\n";
+	cout << "sizeof(char*) : " << sizeof(char*) << "bytes\n";
+
 	system("pause");
 
 	// [UI] 타이틀 화면 (아스키 아트 추가)
