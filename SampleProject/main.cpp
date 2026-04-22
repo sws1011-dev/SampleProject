@@ -5,15 +5,19 @@
 
 using namespace std;
 
-// Call By Value : 복사본 전달 -> 원본은 변경 불가
+// Call By Value: 복사본 전달 -> 원본은 변경 불가
 void PreviewCritical(float attackDamage) {
 	attackDamage *= 2;	// Parameter 복사본만 2배, 원본 변수는 그대로
 	cout << "크리티컬 예상 데미지:" << attackDamage << "\n";
 }
 
+// Call By Address: 주소 전달 -> 원본 직접 수정 가능
+void LevelUp(int* level) {
+	(*level)++;	// 역참조로 level 원본 직접 증가
+}
+
 int main()
 {
-
 	char userName[50];
 	string charactorClass;
 	int classChoiceInput;
@@ -39,6 +43,10 @@ int main()
 	PreviewCritical(attackDamage);
 	cout << "호출 이후 attackDamage: " << attackDamage << "\n";
 
+	// Call By Address: 주소값 전달 -> 원본 직접 수정
+	cout << "레벨업 전 level: " << level << "\n";
+	LevelUp(&level);
+	cout << "레벨업 후 level: " << level << "\n";
 
 	/**
 	* 문서화를 위한 주석
