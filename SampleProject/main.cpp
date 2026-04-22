@@ -5,6 +5,12 @@
 
 using namespace std;
 
+// Call By Value : 복사본 전달 -> 원본은 변경 불가
+void PreviewCritical(float attackDamage) {
+	attackDamage *= 2;	// Parameter 복사본만 2배, 원본 변수는 그대로
+	cout << "크리티컬 예상 데미지:" << attackDamage << "\n";
+}
+
 int main()
 {
 
@@ -27,6 +33,11 @@ int main()
 
 	// 인벤토리 (0=빈칸, 1=Gold, 2=Healing Potion, 3=Weapon, 4=Armor)
 	int gameInventory[5] = { 0 };
+
+	// Call By Value : 복사본 전달 -> 원본의 불변 확인
+	cout << "원본 attackDamage: " << attackDamage << "\n";
+	PreviewCritical(attackDamage);
+	cout << "호출 이후 attackDamage: " << attackDamage << "\n";
 
 
 	/**
