@@ -11,14 +11,26 @@ void PreviewCritical(float attackDamage) {
 	cout << "크리티컬 예상 데미지:" << attackDamage << "\n";
 }
 
-// Call By Address: 주소 전달 -> 원본 직접 수정 가능
-void LevelUp(int* level) {
-	(*level)++;	// 역참조로 level 원본 직접 증가
+// Call By Reference: 예시) 참조자 전달 -> 실제 크리티컬 데미지 적용
+void ApplyCriticalDamage(int& goblinHp, float attackDamage) {
+	int critDamage = attackDamage * 2;	// 치명타는 2배 데미지 적용
+	goblinHp -= critDamage;	// 원본 goblinHp를 직접 감소
 }
+
+// Call By Address: 주소 전달 -> 원본 직접 수정 가능
+//void LevelUp(int* level) {
+//	(*level)++;	// 역참조로 level 원본 직접 증가
+//}
 
 // Call By Reference: 참조자 전달 -> * 없이 직접 수정
 void LevelUpRef(int& level) {
 	level++;
+}
+
+// const 참조자 : 복사 비용 절약 + 원본 수정 차단
+void PrintLevel(const int& level) {
+	cout << "현재 레벨: " << level << "\n";
+	//level++; // 컴파일 오류발생, const라 원본의 수정이 불가능함
 }
 
 int main()
@@ -44,14 +56,14 @@ int main()
 	int gameInventory[5] = { 0 };
 
 	// Call By Value : 복사본 전달 -> 원본의 불변 확인
-	cout << "원본 attackDamage: " << attackDamage << "\n";
-	PreviewCritical(attackDamage);
-	cout << "호출 이후 attackDamage: " << attackDamage << "\n";
+	//cout << "원본 attackDamage: " << attackDamage << "\n";
+	//PreviewCritical(attackDamage);
+	//cout << "호출 이후 attackDamage: " << attackDamage << "\n";
 
 	// Call By Address: 주소값 전달 -> 원본 직접 수정
-	cout << "레벨업 전 level: " << level << "\n";
-	LevelUp(&level);
-	cout << "레벨업 후 level: " << level << "\n";
+	//cout << "레벨업 전 level: " << level << "\n";
+	//LevelUp(&level);
+	//cout << "레벨업 후 level: " << level << "\n";
 
 	// Call By Reference: 별칭(Alias) 선언 -> 원본과 같은 메모리
 	//int& levelRef = level;	// level의 별칭 선언
@@ -60,13 +72,13 @@ int main()
 	//cout << "levelRef++과 level이 동일한 값?: " << levelRef << "\n";
 
 	// Call By Reference: & 없이 호출, * 없이 수정
-	cout << "levelUpRef() 호출 전 원본 level: " << level << "\n";
-	LevelUpRef(level); // & 없이 그냥 변수명
-	cout << "levelUpRef() 호출 후 원본 level: " << level << "\n";
+	//cout << "levelUpRef() 호출 전 원본 level: " << level << "\n";
+	//LevelUpRef(level); // & 없이 그냥 변수명
+	//cout << "levelUpRef() 호출 후 원본 level: " << level << "\n";
 
 
-
-
+	// const 참조자: 읽기 전용, 수정 불가
+	//PrintLevel(level);
 
 	/**
 	* 문서화를 위한 주석
@@ -158,17 +170,6 @@ int main()
 	cout << "=====================================================\n";
 	cout << "       DIABLO STYLE CONSOLE ADVENTURE v1.0         \n";
 	cout << "=====================================================\n";
-	cout << "                _,--.      ,--._                \n";
-	cout << "              /  _   \\    /   _  \\              \n";
-	cout << "             |  (O)   |  |   (O)  |             \n";
-	cout << "              \\      /    \\      /              \n";
-	cout << "               `--'        `--'                 \n";
-	cout << "                   _      _                     \n";
-	cout << "            \\    / \\____/ \\    /              \n";
-	cout << "             \\__/          \\__/               \n";
-	cout << "                \\__________/                    \n";
-	cout << "=====================================================\n\n";
-
 	cout << " >> Input your Hero's name : ";
 	cin >> userName;
 
@@ -236,11 +237,6 @@ int main()
 
 	while (goblinHp > 0 && hp > 0) {
 		cout << "\n";
-		cout << "      (o)(o)  \n";
-		cout << "   /----------\\ \n";
-		cout << "  /  |      |  \\  <-- GOBLIN \n";
-		cout << "     |  @@  |    \n";
-		cout << "     \\______/    \n";
 		cout << "!!! WARNING: A WILD GOBLIN APPEARED !!!\n";
 
 		// 동일한 비율의 게이지 표시 (각자의 MaxHP 대비)
@@ -254,7 +250,7 @@ int main()
 		for (int i = 0; i < 10; i++) cout << (i < pBars ? "#" : " ");
 		cout << "] " << (hp > 0 ? hp : 0) << "\n";
 		cout << "+-----------------------------------------------------------+\n";
-		cout << " [1] Physical Attack    [2] Run Away\n";
+		cout << " [1] Physical Attack    [2] Critical Attack\n";
 		cout << " >> Action : ";
 		cin >> action;
 
@@ -263,6 +259,16 @@ int main()
 		if (action == 1) {
 			cout << "\n>> [YOU] attacked the Goblin for " << (int)attackDamage << " damage!\n";
 			goblinHp -= (int)attackDamage;
+
+			if (goblinHp > 0) {
+				cout << ">> [GOBLIN] counter-attacked! You lost 30 HP.\n";
+				hp -= 30;
+			}
+		}
+		else if (action == 2) {
+			PreviewCritical(attackDamage);
+			ApplyCriticalDamage(goblinHp, attackDamage);
+			cout << "\n>> [YOU] Critical Hit! " << (int)attackDamage * 2 << " damage!\n";
 
 			if (goblinHp > 0) {
 				cout << ">> [GOBLIN] counter-attacked! You lost 30 HP.\n";
@@ -319,6 +325,10 @@ int main()
 		}
 	}
 	cout << "=====================================================\n";
+
+	// 레벨업
+	LevelUpRef(level);
+	PrintLevel(level);
 
 	return 0;
 }
