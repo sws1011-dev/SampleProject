@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <string>
 #include <cstdlib>
-#include <ctime>
 
 #include "Battle.h"
 #include "Monster.h"
@@ -82,12 +81,14 @@ int main()
     int mpBars = (player.GetMp() * 10) / player.GetMaxMp();
     cout << " MP : [";
     for (int i = 0; i < 10; i++) cout << (i < mpBars ? "*" : " ");
-    cout << "] " << player.GetMp() << "/" << player.GetMaxMp() << "\t Lightning : " << player.GetLightningResist() << "%\n";
+    cout << "] " << player.GetMp() << "/" << player.GetMaxMp() << "\t Lightning : " << player.GetLightningResist() <<
+        "%\n";
 
     cout << " STR: " << player.GetStrength() << " \t\t Cold      : " << player.GetColdResist() << "%\n";
     cout << " DEX: " << player.GetDexterity() << " \t\t Poison    : " << player.GetPoisonResist() << "%\n";
     cout << "-----------------------------------------------------\n";
-    cout << " ATK DMG : " << player.GetAttackDamage() << " | ATK SPD : " << player.GetAttackSpeed() << " | MOV SPD : " << player.GetMovingSpeed() << "\n";
+    cout << " ATK DMG : " << player.GetAttackDamage() << " | ATK SPD : " << player.GetAttackSpeed() << " | MOV SPD : "
+        << player.GetMovingSpeed() << "\n";
     cout << "=====================================================\n\n";
 
     system("pause");
@@ -98,16 +99,17 @@ int main()
     {
         // 생성자 호출
         Monster goblin(50, 0, 15, 0, 50);
-        
+
         // 전투기능 클래스 구현 이후 전투 생성과 실행
         Battle battle(player, goblin);
         bool battleResult = battle.Run();
-    
+
         pendingExp += goblin.GetExpReward(); // 몬스터 객체 소멸 전 경험치 보상 저장
     }
+    
     // 결과 판정
     cout << "\n=====================================================\n";
-    if (!player.IsAlive())
+    if (false)
     {
         cout << "             [ !!! YOU ARE DEAD !!! ]                \n";
         if (isHardcore) cout << "        Your journey ends here forever...            \n";
@@ -117,41 +119,13 @@ int main()
         cout << "             [ VICTORY IN SANCTUARY ]                \n";
         cout << "-----------------------------------------------------\n";
 
-        srand((unsigned int)time(NULL));
-        cout << " [LOOT FOUND]\n";
+        // 아이템 루팅
+        player.Loot();
 
-        int* invPtr = player.GetInventory(); // invPtr -> gameInventory 시작 주소 [0]
+        // 레벨업
+        player.GainExp(pendingExp);
+        player.PrintLevel();
 
-        // 포인터로 인벤토리에 랜덤 숫자 저장
-        for (int i = 1; i <= 3; i++)
-        {
-            *invPtr = rand() % 4 + 1; // 역참조로 현재 칸에 아이템 코드를 저장하고자 함
-            invPtr++;
-        }
-
-        // 포인터 순회로 인벤토리 출력(5칸)
-        invPtr = player.GetInventory(); // invPtr 처음 주소로 리셋
-        int slot = 0;
-        cout << "=====================================================\n";
-        cout << "\t\tINVENTORY\n";
-        cout << "=====================================================\n";
-        while (invPtr < player.GetInventory() + 5)
-        {
-            string itemName;
-            if (*invPtr == 1) itemName = "Gold";
-            else if (*invPtr == 2) itemName = "Healing Potion";
-            else if (*invPtr == 3) itemName = "Weapon";
-            else if (*invPtr == 4) itemName = "Armor";
-            else itemName = "None";
-            cout << slot++ << ". " << itemName << "\n";
-            invPtr++;
-        }
+        return 0;
     }
-    cout << "=====================================================\n";
-
-    // 레벨업
-    player.GainExp(pendingExp);
-    player.PrintLevel();
-
-    return 0;
 }
