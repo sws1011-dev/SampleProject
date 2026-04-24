@@ -68,4 +68,6 @@ void Player::Loot(int count)
         cout << j + 1 << ". " << itemName << "\n";
     }
     cout << "=====================================================\n";
+    system("pause");
+    system("cls");
 }

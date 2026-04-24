@@ -15,7 +15,7 @@ bool Battle::Run()
     while (monster.IsAlive() && player.IsAlive())
     {
         cout << "\n";
-        cout << "!!! WARNING: A WILD monster APPEARED !!!\n";
+        cout << "!!! WARNING: A WILD " << monster.GetName() << " APPEARED !!!\n";
 
         // 동일한 비율의 게이지 표시 (각자의 MaxHP 대비)
         int pBars = (player.GetHp() * 10) / player.GetMaxHp();
