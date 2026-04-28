@@ -1,7 +1,9 @@
 ﻿#pragma once
+#include <memory>
 #include <string>
 #include <vector>
 #include "Character.h"
+#include "Item.h"
 
 using namespace std;
 
@@ -18,7 +20,7 @@ private:
     int exp, expToNextLevel;
     
     // 인벤토리
-    vector<int> inventory;
+    vector<Item> inventory;
     
 protected:
     // 자식 클래스(바바리안, 소서리스 등)이 스탯을 직접 지정할때 사용되는 생성자
@@ -43,5 +45,6 @@ public:
     void GainExp(int amount);
     void PreviewCritical() const;
     void PrintLevel() const;
-    void Loot(int count = 3); // 빈 슬롯부터 count개의 아이템 획득 -> 인벤토리에 저장 + 출력
+    void Loot(unique_ptr<Item> item);   // 소유권 이전을 통한 아이템 획득
+    void PrintInventory() const;    // 인벤토리 전체 출력
 };

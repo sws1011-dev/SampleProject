@@ -1,6 +1,8 @@
 ﻿#include "Player.h"
 #include <iostream>
 
+#include "Item.h"
+
 Player::Player(const string& name, const string& characterClass, bool isHardCore)
 // 외부입력 값 세팅 초기화
     : Character(50, 50, 50, 50, 1),
@@ -18,13 +20,16 @@ Player::Player(const string& name, const string& characterClass, bool isHardCore
 
 
 Player::Player(const string& name, const string& characterClass, bool isHardcore,
-    int str, int dex, int vit, int eng)
-        : Character(str, dex, vit, eng, 1), exp(0), expToNextLevel(100) {}
+               int str, int dex, int vit, int eng)
+    : Character(str, dex, vit, eng, 1), exp(0), expToNextLevel(100)
+{
+}
 
 Player::~Player()
 {
     cout << "[플레이어 소멸]" << name << "\n";
 }
+
 int Player::CriticalAttack() const { return (int)(attackDamage * 2); }
 
 void Player::LevelUp() { level++; }
@@ -52,29 +57,23 @@ void Player::GainExp(int amount)
     }
 }
 
-void Player::Loot(int count)
+void Player::Loot(unique_ptr<Item> item)
 {
-    cout << " [LOOT FOUND]\n";
-
-    // count개의 아이템을 vector에 추가
-    for (int i = 0; i < count; i++)
-    {
-        // 랜덤 숫자 1개씩 인벤토리에 벡터에 넣음
-        inventory.push_back(rand() % 4 + 1);
-    }
+    cout << "[획득]" << item->name << "\n";
+    inventory.push_back(*item);
+}
+void Player::PrintInventory() const{
     // 인벤토리 출력
     cout << "=====================================================\n";
     cout << "\t\tINVENTORY\n";
     cout << "=====================================================\n";
     for (int j = 0; j < inventory.size(); j++)
     {
-        string itemName;
-        if (inventory[j] == 1) itemName = "Gold";
-        else if (inventory[j] == 2) itemName = "Healing Potion";
-        else if (inventory[j] == 3) itemName = "Weapon";
-        else if (inventory[j] == 4) itemName = "Armor";
-        else itemName = "None";
-        cout << j + 1 << ". " << itemName << "\n";
+        string typeStr;
+        if (inventory[j].type == ItemType::Weapon) typeStr = "Weapon";
+        else if (inventory[j].type == ItemType::Armor) typeStr = "Armor";
+        else typeStr = "Consumable";
+        cout << j + 1 << ". " << inventory[j].name << "\n";
     }
     cout << "=====================================================\n";
     system("pause");

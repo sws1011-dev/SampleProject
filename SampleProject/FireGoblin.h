@@ -8,4 +8,6 @@ public:
     
     int Attack() const override;
     string GetAttackMessage() const override { return " [Fire!]"; }
+    
+    
 };

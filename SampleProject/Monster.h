@@ -1,7 +1,9 @@
 ﻿#pragma once
+#include <memory>
 #include <string>
 
 #include "Character.h"
+#include "Item.h"
 using namespace std;
 
 class Monster : public Character
@@ -18,4 +20,5 @@ public:
     string GetName() const {return name; };
     
     virtual string GetAttackMessage() const { return ""; }
+    virtual unique_ptr<Item> Drop() const;  // 몬스터 처치 시 아이템이 드롭
 };
