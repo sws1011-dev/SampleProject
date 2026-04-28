@@ -2,10 +2,13 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+
+#include "Barbarian.h"
 #include "Battle.h"
 #include "FireGoblin.h"
 #include "Monster.h"
 #include "Player.h"
+#include "Sorceress.h"
 
 using namespace std;
 
@@ -59,8 +62,12 @@ int main()
     cin >> hardcoreInput;
     isHardcore = (hardcoreInput == '1');
 
-    // Player 객체 생성 - 입력받은 값들로 초기화, 스탯은 내부에서 자동 계산됨
-    Player player(userName, charactorClass, isHardcore);
+    // Player 직업에따라 자식 클래스를 생성
+    Player* playerPtr = nullptr;
+    if (classChoiceInput == 3) playerPtr = new Barbarian(userName, isHardcore);
+    else if (classChoiceInput == 7) playerPtr = new Sorceress(userName, isHardcore);
+    else playerPtr = new Player(userName, charactorClass, isHardcore);
+    Player& player = *playerPtr;
 
     system("cls"); // 화면 전환
 
@@ -141,6 +148,7 @@ int main()
         {
             delete monster;
         }
+        delete playerPtr;
     }
     return 0;
 }

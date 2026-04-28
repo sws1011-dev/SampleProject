@@ -19,7 +19,12 @@ private:
     
     // 인벤토리
     vector<int> inventory;
-
+    
+protected:
+    // 자식 클래스(바바리안, 소서리스 등)이 스탯을 직접 지정할때 사용되는 생성자
+    Player(const string& name, const string& characterClass, bool isHardcore,
+        int str, int dex, int vit, int eng);
+	
 public:
     Player(const string& name, const string& characterClass, bool isHardCore); // 외부입력 값 세팅 초기화
 
@@ -32,6 +37,7 @@ public:
 
     // 기능(함수)
     int CriticalAttack() const;
+    virtual string GetAttackMessage() const { return ""; }
     void LevelUp();
     void GainExp(int amount);
     void PreviewCritical() const;
