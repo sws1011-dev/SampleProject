@@ -27,6 +27,7 @@ protected:
 	
 public:
     Player(const string& name, const string& characterClass, bool isHardCore); // 외부입력 값 세팅 초기화
+    virtual ~Player();
 
     // Getters
     string GetName() const { return name; }
