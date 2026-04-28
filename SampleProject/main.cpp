@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <vector>
 #include "Battle.h"
+#include "FireGoblin.h"
 #include "Monster.h"
 #include "Player.h"
 
@@ -96,23 +97,24 @@ int main()
 
     // 전투 시스템    
     int pendingExp = 0;
-    vector<Monster> monsters = {
-        Monster("Goblin", 50, 0, 15, 0, 50),
-        Monster("Skeleton", 100, 0, 10, 0, 70),
-        Monster("Zombie", 40, 0, 30, 0, 150),
-        Monster("Ghoul", 50, 0, 50, 0, 300),
-        Monster("Andariel", 200, 0, 150, 0, 500),
+    vector<Monster*> monsters = {
+        new Monster("Goblin", 50, 0, 15, 0, 50),
+        new FireGoblin("FireGoblin", 50, 0, 15, 0, 50),
+        new Monster("Skeleton", 60, 0, 20, 0, 50),
+        new Monster("Wraith", 50, 0, 25, 0, 50),
+        new Monster("Ghoul", 70, 0, 35, 0, 120),
+        new Monster("Andariel", 200, 0, 150, 0, 500),
 
     };
-    for (Monster& monster : monsters)
+    for (Monster* monster : monsters)
     {
         if (!player.IsAlive()) break;
 
         // 전투기능 클래스 구현 이후 전투 생성과 실행
-        Battle battle(player, monster);
+        Battle battle(player, *monster);
         bool battleResult = battle.Run();
 
-        pendingExp += monster.GetExpReward(); // 몬스터 객체 소멸 전 경험치 보상 저장
+        pendingExp += monster -> GetExpReward(); // 몬스터 객체 소멸 전 경험치 보상 저장
 
         // 결과 판정
         cout << "\n=====================================================\n";
@@ -134,8 +136,11 @@ int main()
             player.PrintLevel();
         }
 
-
+        // new로 생성한 몬스터 메모리 해제
+        for (Monster* monster : monsters)
+        {
+            delete monster;
+        }
     }
-        return 0;
-    
+    return 0;
 }
