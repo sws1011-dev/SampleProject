@@ -52,10 +52,10 @@ void Player::GainExp(int amount)
     }
 }
 
-void Player::Loot(unique_ptr<Item> item)
+void Player::Loot(Item item)
 {
-    cout << "[획득]" << item->name << "\n";
-    inventory.push_back(*item);
+    cout << "[획득]" << item.name << "\n";
+    inventory.emplace_back(move(item)); // Item을 인벤토리 안으로 직접 이동
     cout <<"[인벤토리] size = " << inventory.size() << ", capacity = " << inventory.capacity() << "\n";
 }
 void Player::PrintInventory() const{
