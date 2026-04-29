@@ -7,6 +7,7 @@
 #include "Barbarian.h"
 #include "Battle.h"
 #include "FireGoblin.h"
+#include "Mercenary.h"
 #include "Monster.h"
 #include "Player.h"
 #include "Sorceress.h"
@@ -64,10 +65,10 @@ int main()
     isHardcore = (hardcoreInput == '1');
 
     // Player 직업에따라 자식 클래스를 생성
-    unique_ptr<Player> playerPtr;
-    if (classChoiceInput == 3) playerPtr = make_unique<Barbarian>(userName, isHardcore);
-    else if (classChoiceInput == 7) playerPtr = make_unique<Sorceress>(userName, isHardcore);
-    else playerPtr = make_unique<Player>(userName, charactorClass, isHardcore);
+    shared_ptr<Player> playerPtr;
+    if (classChoiceInput == 3) playerPtr = make_shared<Barbarian>(userName, isHardcore);
+    else if (classChoiceInput == 7) playerPtr = make_shared<Sorceress>(userName, isHardcore);
+    else playerPtr = make_shared<Player>(userName, charactorClass, isHardcore);
     Player& player = *playerPtr;
 
     system("cls"); // 화면 전환
@@ -102,6 +103,12 @@ int main()
 
     system("pause");
     system("cls"); // 전투 전 화면 전환
+    
+    shared_ptr<Mercenary> mercenary = make_shared<Mercenary>("Rogue", 12, playerPtr);
+    player.companion = mercenary; // Player -> Mercenary 연결 (순환참조)
+    cout << "[use_count] playerPtr 참조 수 : " << playerPtr.use_count() << endl; 
+    cout << "[use_count] mercenary 참조 수 : " << mercenary.use_count() << endl; 
+    // 서로 참조하고 있어서 소멸자가 안나타날것임 (count == 0 일때 delete)
 
     // 전투 시스템    
     int pendingExp = 0;
@@ -118,7 +125,7 @@ int main()
         if (!player.IsAlive()) break;
 
         // 전투기능 클래스 구현 이후 전투 생성과 실행
-        Battle battle(player, *monster);
+        Battle battle(player, *monster, mercenary);
         bool battleResult = battle.Run();
 
         pendingExp += monster->GetExpReward(); // 몬스터 객체 소멸 전 경험치 보상 저장
@@ -138,6 +145,7 @@ int main()
             // 아이템 루팅
             // 몬스터가 처치 -> 아이템 드롭 -> move로 소유권을 이전
             unique_ptr<Item> droppedItem = monster->Drop();
+            
             if (droppedItem)
             {
                 cout << "[드롭]" << droppedItem->name << "가 바닥에 떨어졌습니다.\n";

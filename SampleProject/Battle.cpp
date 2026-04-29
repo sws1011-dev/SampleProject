@@ -1,10 +1,12 @@
 ﻿#include <iostream>
 #include "Battle.h"
 
+#include "Mercenary.h"
+
 using namespace std;
 
-Battle::Battle(Player& player, Monster& monster)
-    : player(player), monster(monster), combatMessage("[System] Battle Started!")
+Battle::Battle(Player& player, Monster& monster, shared_ptr<Mercenary> mercenary)
+    : player(player), monster(monster), mercenary(mercenary), combatMessage("[System] Battle Started!")
 {
 }
 
@@ -36,8 +38,15 @@ bool Battle::Run()
 
         if (action == 1)
         {
-            cout << "\n>> [YOU] attacked the monster for " << (int)player.GetAttackDamage() << " damage!\n";
             monster.TakeDamage((int)player.GetAttackDamage()); // 객체 스스로가 데미지를 처리하고 있음
+            cout << "\n>> [YOU] attacked the monster for " << (int)player.GetAttackDamage() << " damage!\n";
+            
+            if (mercenary && monster.IsAlive())
+            {
+                int mercDmg = mercenary->Attack();
+                monster.TakeDamage(mercDmg);
+                cout << "\n>> [mercenary] attacked the monster for " << mercDmg << " damage!\n";
+            }
 
             if (monster.IsAlive())
             {
@@ -50,6 +59,13 @@ bool Battle::Run()
             player.PreviewCritical();
             monster.TakeDamage(player.CriticalAttack()); // 2배 데미지 받음
             cout << "\n>> [YOU] Critical Hit! " << player.CriticalAttack() << " damage!\n";
+            
+            if (mercenary && monster.IsAlive())
+            {
+                int mercDmg = mercenary->Attack();
+                monster.TakeDamage(mercDmg);
+                cout << ">> [mercenary] attacked the monster for " << mercDmg << " damage!\n";
+            }
 
             if (monster.IsAlive())
             {
