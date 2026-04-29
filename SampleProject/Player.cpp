@@ -63,13 +63,16 @@ void Player::PrintInventory() const{
     cout << "=====================================================\n";
     cout << "\t\tINVENTORY\n";
     cout << "=====================================================\n";
-    for (int j = 0; j < inventory.size(); j++)
+    
+    int i = 1;
+    // Range-based for문 + const auto&
+    for (const auto& item : inventory)
     {
         string typeStr;
-        if (inventory[j].type == ItemType::Weapon) typeStr = "Weapon";
-        else if (inventory[j].type == ItemType::Armor) typeStr = "Armor";
+        if (item.type == ItemType::Weapon) typeStr = "Weapon";
+        else if (item.type == ItemType::Armor) typeStr = "Armor";
         else typeStr = "Consumable";
-        cout << j + 1 << ". " << inventory[j].name << "\n";
+        cout << i++ << ". " << item.name << "\n";
     }
     cout << "=====================================================\n";
     system("pause");
