@@ -13,7 +13,7 @@ Battle::Battle(Player& player, Monster& monster, shared_ptr<Mercenary> mercenary
 bool Battle::Run()
 {
     int action;
-    
+
     // lock() : weak_ptr에서 임시로 shared_ptr을 통해 데이터 접근
     if (mercenary)
     {
@@ -40,7 +40,7 @@ bool Battle::Run()
         for (int i = 0; i < 10; i++) cout << (i < pBars ? "#" : " ");
         cout << "] " << (player.IsAlive() ? player.GetHp() : 0) << "\n";
         cout << "+-----------------------------------------------------------+\n";
-        cout << " [1] Physical Attack    [2] Critical Attack\n";
+        cout << " [1] Physical Attack    [2] Critical Attack    [3] Use Healing Potion\n";
         cout << " >> Action : ";
         cin >> action;
 
@@ -50,7 +50,7 @@ bool Battle::Run()
         {
             monster.TakeDamage((int)player.GetAttackDamage()); // 객체 스스로가 데미지를 처리하고 있음
             cout << "\n>> [YOU] attacked the monster for " << (int)player.GetAttackDamage() << " damage!\n";
-            
+
             if (mercenary && monster.IsAlive())
             {
                 int mercDmg = mercenary->Attack();
@@ -69,7 +69,7 @@ bool Battle::Run()
             player.PreviewCritical();
             monster.TakeDamage(player.CriticalAttack()); // 2배 데미지 받음
             cout << "\n>> [YOU] Critical Hit! " << player.CriticalAttack() << " damage!\n";
-            
+
             if (mercenary && monster.IsAlive())
             {
                 int mercDmg = mercenary->Attack();
@@ -83,17 +83,28 @@ bool Battle::Run()
                 player.TakeDamage(monster.Attack());
             }
         }
+        else if (action == 3)
+        {
+            if (player.UseItem("Healing Potion"))
+            {
+                cout << ">> [You] Healing Potion를 사용 했습니다. " << player.GetHp() << "/" << player.GetMaxHp() << "\n";
+            }
+            else
+            {
+                cout << ">> [You] Healing Potion이 없습니다.\n";
+            }
+        }
         else
         {
             cout << ">> [SYSTEM] You failed to act! The monster strikes! (-" << monster.Attack() << " HP)\n";
             player.TakeDamage(monster.Attack());
         }
     }
-    
+
     // 마지막 전투 메시지 확인 후 결과창으로 전환
     cout << "\n>> Battle ended. Press any key to see the result...\n";
     system("pause");
     system("cls");
-    
+
     return player.IsAlive();
 }
