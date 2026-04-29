@@ -13,11 +13,11 @@ class Mercenary
 public:
     string name;
     int attackDamage;
-    shared_ptr<Player> owner;
+    weak_ptr<Player> owner;
 
     Mercenary(const string name, int atk, shared_ptr<Player> owner);
     ~Mercenary();
 
     int Attack() const { return attackDamage; }
-    bool IsOwnerAlive() const { return owner != nullptr; }  // 주인이 살아있는지 확인
+    bool IsOwnerAlive() const { return owner.expired(); }  // 주인이 살아있는지 확인
 };
